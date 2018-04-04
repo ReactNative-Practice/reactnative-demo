@@ -4,17 +4,22 @@ import {
     getChildEventSubscriber,
     addNavigationHelpers,
     StackNavigator,
+    TabNavigator,
     SwitchNavigator,
     NavigationActions
 } from "react-navigation";
 import Color from 'constants/Color'
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import Login from 'pages/Login'
 import Home from 'pages/Home'
+import Detail from 'pages/Home/Detail'
 import Profile from 'pages/Profile'
+import Favorite from 'pages/Profile/Favorite'
 import SignUp from 'pages/Login/SignUp'
 import ForgotPwd from 'pages/Login/ForgotPwd'
 import AuthLoading from 'pages/Login/AuthLoading'
+import ComponentScreen from 'pages/Component'
+import TabViewExample from 'pages/Component/TabViewExample'
 
 /** 配置导航的属性 **/
 const navigationConfig = {
@@ -33,50 +38,118 @@ const navigationConfig = {
     },
 }
 
-// const AuthStack = StackNavigator(
-//     {
-//         Login: { screen: Login },
-//         SignUp: { screen: SignUp },
-//         ForgotPwd: { screen: ForgotPwd },
-//     },
-//     {
-//         initialRouteName: "Login",
-//         navigationOptions: ({ navigation: { state } }) => ({
-//             title: state.params && state.params.title,
-//             ...navigationConfig
-//         })
-//     }
-// )
-
-// const AppStack = StackNavigator(
-//     {
-//         Home: { screen: Home },
-//         Profile: { screen: Profile },
-//     },
-//     {
-//         initialRouteName: "Home",
-//         navigationOptions: ({ navigation: { state } }) => ({
-//             title: state.params && state.params.title,
-//             ...navigationConfig
-//         })
-//     }
-// )
-
-const Stack = StackNavigator(
+const HomeTab = StackNavigator(
     {
-        AuthLoading: AuthLoading,
         Home: { screen: Home },
-        Profile: { screen: Profile },
+        Detail: { screen: Detail },
+        AuthLoading: AuthLoading,
+    },
+    {
+        initialRouteName: "Home",
+        navigationOptions: ({ navigation: { state } }) => ({
+            ...navigationConfig,
+            tabBarLabel: '首页',
+            lazyLoad: true,
+            animationEnabled: false,
+            tabBarIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name={focused ? 'ios-home' : 'ios-home-outline'}
+                    size={26}
+                    style={{ color: tintColor, fontWeight: 'bold' }}
+                />
+            ),
+        })
+    }
+)
+
+const ComponentTab = StackNavigator(
+    {
+        TabViewExample: TabViewExample,
+        ComponentScreen: ComponentScreen,
+    },
+    {
+        initialRouteName: "TabViewExample",
+        navigationOptions: ({ navigation: { state } }) => ({
+            ...navigationConfig,
+            tabBarLabel: '组件',
+            tabBarIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name={focused ? 'ios-film' : 'ios-film-outline'}
+                    size={26}
+                    style={{ color: tintColor, fontWeight: 'bold' }}
+                />
+            ),
+        })
+    }
+)
+
+const LoginTab = StackNavigator(
+    {
         Login: { screen: Login },
         SignUp: { screen: SignUp },
         ForgotPwd: { screen: ForgotPwd },
     },
     {
-        initialRouteName: "AuthLoading",
+        initialRouteName: "Login",
         navigationOptions: ({ navigation: { state } }) => ({
-            title: state.params && state.params.title,
-            ...navigationConfig
+            ...navigationConfig,
+            tabBarLabel: '登录',
+            tabBarIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name={focused ? 'ios-people' : 'ios-people-outline'}
+                    size={26}
+                    style={{ color: tintColor, fontWeight: 'bold' }}
+                />
+            ),
         })
+    }
+)
+
+const ProfileTab = StackNavigator(
+    {
+        Profile: { screen: Profile },
+        Favorite: { screen: Favorite },
+    },
+    {
+        initialRouteName: "Profile",
+        navigationOptions: () => ({
+            ...navigationConfig,
+            tabBarLabel: '个人中心',
+            tabBarIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name={focused ? 'ios-settings' : 'ios-settings-outline'}
+                    size={26}
+                    style={{ color: tintColor, fontWeight: 'bold' }}
+                />
+            ),
+        })
+    }
+)
+
+const Stack = TabNavigator(
+    {
+        Home: { screen: HomeTab },
+        Component: { screen: ComponentTab },
+        Login: { screen: LoginTab },
+        Profile: { screen: ProfileTab }
+    },
+    {
+        lazy: true,
+        tabBarPosition: 'bottom',
+        tabBarOptions: {
+            activeTintColor: '#3e9ce9',
+            inactiveTintColor: '#999999',
+            showIcon: true,
+            style: {
+                backgroundColor: '#fff'
+            },
+            indicatorStyle: {
+                opacity: 0
+            },
+            tabStyle: {
+                padding: 0
+            }
+        }
     }
 )
 

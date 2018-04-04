@@ -5,25 +5,16 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import { NavigationActions } from "react-navigation";
 import { Button, Divider } from 'react-native-elements'
 
-class Profile extends Component {
-
-    static navigationOptions = () => {
-        title: '个人中心'
-    }
+class Favorite extends Component {
 
     render() {
-        const { navigate, goBack } = this.props.navigation
+        const { goBack } = this.props.navigation
+
         return (
             <View style={styles.container}>
-                <Text>Profile screen</Text>
-
-                <Divider />
-                <Button onPress={() => navigate('Favorite')}
-                    title="to profile favorite"
-                />
+                <Text>Favorite screen</Text>
 
                 <Divider />
                 <Button onPress={() => goBack()}
@@ -43,4 +34,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Profile;
+export default Favorite;
