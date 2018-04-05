@@ -12,7 +12,7 @@ class ItemCell extends Component {
     }
 
     render() {
-        const { item, navigation } = this.props;
+        const { item, nav } = this.props;
 
         return <View style={styles.container}>
             <View style={styles.imgView}>
@@ -21,9 +21,10 @@ class ItemCell extends Component {
 
             <View style={styles.content}>
                 <Text style={styles.title}>{item.title}</Text>
-                <View>
-                    <Text>{item.source}</Text>
-                    <Text>{item.datetime}</Text>
+
+                <View style={styles.cellBottom}>
+                    <Text style={styles.source}>{item.source}</Text>
+                    <Text style={styles.datetime}>{item.datetime}</Text>
                 </View>
             </View>
         </View>
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
         height: 60,
-        borderWidth: 1,
     },
     imgView: {
         flex: 1,
@@ -50,6 +50,16 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 3,
+    },
+    cellBottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    source: {
+        flex: 1,
+    },
+    datetime: {
+        flex: 1,
     }
 })
 

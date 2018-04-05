@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "flow": "flow",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build:android": "cd android && ./gradlew assembleRelease",
     "release:android": "cd android && ./gradlew installRelease",
@@ -41,6 +42,7 @@
     "babel-eslint": "^7.2.1",
     "babel-jest": "22.4.3",
     "babel-plugin-transform-remove-console": "^6.9.0",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "4.0.0",
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",

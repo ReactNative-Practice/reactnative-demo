@@ -40,7 +40,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        this.loadData()
+        // this.loadData()
         this.props.store.type.getType();
     }
 
@@ -49,7 +49,7 @@ class Home extends Component {
             this.setState({
                 delayShowScrollTableView: true
             });
-        }, 500);
+        }, 200);
     }
 
     static navigationOptions = ({ navigation }) => ({
@@ -57,24 +57,6 @@ class Home extends Component {
         headerRight: (<Text></Text>),
         headerLeft: (<Text></Text>),
     })
-
-    request = (code = '', action = 'get') => {
-        console.log('request: Axios ', code);
-
-        if (action == 'get') {
-            Axios.get('banner?code=' + code, res => {
-                console.log('_axios res: ', res)
-            }, (err) => {
-                console.log('home error:', err)
-            });
-        } else {
-            Axios.post('banner?code=' + code, res => {
-                console.log('_axios res: ', res)
-            }, (err) => {
-                console.log('home error:', err)
-            });
-        }
-    }
 
     loadData() {
         let data = [];
@@ -96,7 +78,7 @@ class Home extends Component {
         }
 
         this.loadData();
-    };
+    }
 
     _header = () => {
         return null
@@ -149,17 +131,19 @@ class Home extends Component {
         let content = null;
         if (type) {
             content = type.map((item, i) => {
-                return <View tabLabel={item.label} key={i}
-                    style={{ width: '100%', borderWidth: 1 }}
-                >
-                    {/* {i == 0
+                return <ScrollView tabLabel={item.label} key={i}>
+
+                    {i == 0
                         ? <View style={{ height: 160 }}><Banner /></View>
-                        : null} */}
+                        : null}
                     {/* <View style={{ width: '100%', height: 100, borderWidth: 1 }}>
                         <Text>xxx {i} {item.label}</Text>
                     </View> */}
-                    <FlatList
-                        ref={(flatList) => this._flatList = flatList}
+                    <ItemList
+                        nav={this.props.navigation}
+                        typeId={item.id}
+                    />
+                    {/* <FlatList
                         ListHeaderComponent={this._header}
                         // ListFooterComponent={this._footer}
                         keyExtractor={this._keyExtractor}
@@ -177,8 +161,8 @@ class Home extends Component {
                         )}
                         ListEmptyComponent={this._renderEmptyView}
                         data={this.state.sourceData}>
-                    </FlatList>
-                </View>
+                    </FlatList> */}
+                </ScrollView>
             })
         }
 
@@ -189,36 +173,24 @@ class Home extends Component {
         const { navigate, setParams, state } = this.props.navigation;
         let content = '';
         console.log('showScroll', this.state.delayShowScrollTableView)
-        return (
-            <ScrollableTabView
-                style={styles.container}
-                initialPage={0}
-                renderTabBar={() => <ScrollableTabBar />}
-                tabBarBackgroundColor={Color.primary}
-                tabBarInactiveTextColor='#A6C5BC'
-                tabBarActiveTextColor='white'
-                tabBarUnderlineColor='#FF0000'
-                tabBarUnderlineStyle={styles.lineStyle}>
+        if (this.state.delayShowScrollTableView) {
+            return (
+                <ScrollableTabView
+                    style={styles.container}
+                    initialPage={0}
+                    renderTabBar={() => <ScrollableTabBar />}
+                    // tabBarBackgroundColor={Color.primary}
+                    tabBarInactiveTextColor='#A6C5BC'
+                    tabBarActiveTextColor='#333333'
+                    tabBarUnderlineColor='#ffffff'
+                    tabBarUnderlineStyle={{}}>
 
-                <View tabLabel="tab1" style={{ marginTop: 50, borderWidth: 3, }}>
-                    <Text style={{ color: 'red' }}>Tab 111</Text>
-                </View>
-                <View tabLabel="tab2" style={{ marginTop: 50, borderWidth: 3, }}>
-                    <Text style={{ color: 'red' }}>Tab 2</Text>
-                </View>
-
-                <View tabLabel="tab3" style={{ marginTop: 50, borderWidth: 3, }}>
-                    <Text style={{ color: 'red' }}>Tab 3</Text>
-                </View>
-
-                <View tabLabel="tab4" style={{ marginTop: 50, borderWidth: 3, }}>
-                    <Text style={{ color: 'red' }}>Tab 4</Text>
-                </View>
-
-
-            </ScrollableTabView>
-
-        );
+                    {this._renderContent()}
+                </ScrollableTabView>
+            )
+        } else {
+            return null
+        }
     }
 }
 

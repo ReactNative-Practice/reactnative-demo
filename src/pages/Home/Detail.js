@@ -10,11 +10,12 @@ import { Button, Divider } from 'react-native-elements'
 class Detail extends Component {
 
     render() {
-        const {goBack} = this.props.navigation
+        const { goBack } = this.props.navigation
 
         return (
             <View style={styles.container}>
                 <Text>Detail screen</Text>
+                <Text>typeid {this.props.typeId}</Text>
 
                 <Divider />
                 <Button onPress={() => goBack()}
