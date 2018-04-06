@@ -40,11 +40,12 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        // this.loadData()
         this.props.store.type.getType();
     }
 
     componentDidMount() {
+
+        // this.loadData()
         this.timer = setTimeout(() => {
             this.setState({
                 delayShowScrollTableView: true
@@ -58,72 +59,73 @@ class Home extends Component {
         headerLeft: (<Text></Text>),
     })
 
-    loadData() {
-        let data = [];
-        for (i = 0; i < 8; i++) {
-            data.push(sourceData);
-        }
+    // loadData() {
+    //     let data = [];
+    //     for (i = 0; i < 8; i++) {
+    //         data.push(sourceData);
+    //     }
 
-        this.setState({ sourceData: this.state.sourceData.concat(data) })
-    }
+    //     this.setState({ sourceData: this.state.sourceData.concat(data) })
+    // }
 
     logout = () => {
         this.props.store.user.logout();
     }
 
-    // 上拉加载更多
-    _onEndReached = () => {
-        if (this.state.isEmpty) {
-            return false;
-        }
+    // // 上拉加载更多
+    // _onEndReached = () => {
+    //     if (this.state.isEmpty) {
+    //         return false;
+    //     }
 
-        this.loadData();
-    }
+    //     this.loadData();
+    //     console.log('_onEndReached ...')
+    // }
 
-    _header = () => {
-        return null
-    }
+    // _header = () => {
+    //     return null
+    // }
 
-    _renderItem = ({ item }) => (
-        <ItemCell
-            nav={this.props.navigation}
-            item={item}
-        />
-    );
+    // _renderItem = ({ item }) => (
+    //     <ItemCell
+    //         nav={this.props.navigation}
+    //         item={item}
+    //     />
+    // );
 
-    _keyExtractor = (item, index) => '' + index + '';
+    // _keyExtractor = (item, index) => '' + index + '';
 
-    _renderRefresh = () => {
-        this.setState({ refreshing: true })//开始刷新
-        //这里模拟请求网络，拿到数据，3s后停止刷新
-        setTimeout(() => {
-            // CustomToastAndroid.show('没有可刷新的内容！', CustomToastAndroid.SHORT);
-            this.setState({ refreshing: false });
-        }, 3000);
-    };
+    // _renderRefresh = () => {
+    //     this.setState({ refreshing: true })//开始刷新
+    //     //这里模拟请求网络，拿到数据，3s后停止刷新
+    //     setTimeout(() => {
+    //         // CustomToastAndroid.show('没有可刷新的内容！', CustomToastAndroid.SHORT);
+    //         this.setState({ refreshing: false });
+    //     }, 3000);
+    // };
 
-    _footer = () => {
-        if (this.state.isEmpty) {
-            return <View></View>;
-        }
+    // _footer = () => {
+    //     if (this.state.isEmpty) {
+    //         return <View></View>;
+    //     }
 
-        return <View style={{ padding: 8 }}>
-            <ActivityIndicator size="small" />
-            <Text style={{ textAlign: 'center' }}>加载中...</Text>
-        </View>;
-    }
+    //     return <View style={{ padding: 8 }}>
+    //         <ActivityIndicator size="small" />
+    //         <Text style={{ textAlign: 'center' }}>加载中...</Text>
+    //     </View>;
+    // }
 
-    _separator = () => {
-        return <Divider />;
-    }
+    // _separator = () => {
+    //     return <Divider />;
+    // }
 
-    // 空布局
-    _renderEmptyView = () => {
-        if (this.state.isEmpty) {
-            return <View><Text style={{ textAlign: 'center', paddingTop: 10 }}>没有更多数据了</Text></View>
-        }
-        return <View></View>;
-    }
+    // // 空布局
+    // _renderEmptyView = () => {
+    //     if (this.state.isEmpty) {
+    //         return <View><Text style={{ textAlign: 'center', paddingTop: 10 }}>没有更多数据了</Text></View>
+    //     }
+    //     return <View></View>;
+    // }
 
     _renderContent() {
         let type = this.props.store.type.data;
@@ -131,19 +133,20 @@ class Home extends Component {
         let content = null;
         if (type) {
             content = type.map((item, i) => {
-                return <ScrollView tabLabel={item.label} key={i}>
-
-                    {i == 0
-                        ? <View style={{ height: 160 }}><Banner /></View>
-                        : null}
-                    {/* <View style={{ width: '100%', height: 100, borderWidth: 1 }}>
-                        <Text>xxx {i} {item.label}</Text>
-                    </View> */}
+                return <View key={i} tabLabel={item.label}>
                     <ItemList
                         nav={this.props.navigation}
                         typeId={item.id}
                     />
-                    {/* <FlatList
+                </View>
+                // <ScrollView tabLabel={item.label} key={i}>
+
+
+                {/* <View style={{ width: '100%', height: 100, borderWidth: 1 }}>
+                        <Text>xxx {i} {item.label}</Text>
+                    </View> */}
+
+                {/* <FlatList
                         ListHeaderComponent={this._header}
                         // ListFooterComponent={this._footer}
                         keyExtractor={this._keyExtractor}
@@ -162,7 +165,7 @@ class Home extends Component {
                         ListEmptyComponent={this._renderEmptyView}
                         data={this.state.sourceData}>
                     </FlatList> */}
-                </ScrollView>
+                // </ScrollView>
             })
         }
 
@@ -179,11 +182,11 @@ class Home extends Component {
                     style={styles.container}
                     initialPage={0}
                     renderTabBar={() => <ScrollableTabBar />}
-                    // tabBarBackgroundColor={Color.primary}
-                    tabBarInactiveTextColor='#A6C5BC'
-                    tabBarActiveTextColor='#333333'
-                    tabBarUnderlineColor='#ffffff'
-                    tabBarUnderlineStyle={{}}>
+                    tabBarBackgroundColor="#fff"
+                    tabBarInactiveTextColor='#666'
+                    tabBarActiveTextColor={Color.primary}
+                    tabBarUnderlineStyle={{ backgroundColor: 'transparent' }}
+                >
 
                     {this._renderContent()}
                 </ScrollableTabView>

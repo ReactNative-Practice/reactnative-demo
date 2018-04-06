@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BackHandler, ToastAndroid } from 'react-native'
+import { BackHandler, View, ToastAndroid } from 'react-native'
 import {
     getChildEventSubscriber,
     addNavigationHelpers,
@@ -20,6 +20,7 @@ import ForgotPwd from 'pages/Login/ForgotPwd'
 import AuthLoading from 'pages/Login/AuthLoading'
 import ComponentScreen from 'pages/Component'
 import TabViewExample from 'pages/Component/TabViewExample'
+import FlatlistScreen from 'pages/Component/FlatlistScreen'
 
 /** 配置导航的属性 **/
 const navigationConfig = {
@@ -50,13 +51,17 @@ const HomeTab = StackNavigator(
             ...navigationConfig,
             tabBarLabel: '首页',
             lazyLoad: true,
+            swipeEnabled: false,
             animationEnabled: false,
+            showLabel: true,
             tabBarIcon: ({ tintColor, focused }) => (
-                <Icon
-                    name={focused ? 'ios-home' : 'ios-home-outline'}
-                    size={26}
-                    style={{ color: tintColor, fontWeight: 'bold' }}
-                />
+                <View style={{ width: 24, height: 24 }}>
+                    <Icon
+                        name={focused ? 'ios-home' : 'ios-home-outline'}
+                        size={24}
+                        style={{ color: tintColor }}
+                    />
+                </View>
             ),
         })
     }
@@ -66,18 +71,23 @@ const ComponentTab = StackNavigator(
     {
         TabViewExample: TabViewExample,
         ComponentScreen: ComponentScreen,
+        FlatlistScreen: FlatlistScreen,
     },
     {
-        initialRouteName: "TabViewExample",
+        initialRouteName: "ComponentScreen",
         navigationOptions: ({ navigation: { state } }) => ({
             ...navigationConfig,
             tabBarLabel: '组件',
+            swipeEnabled: false,
+            showLabel: true,
             tabBarIcon: ({ tintColor, focused }) => (
-                <Icon
-                    name={focused ? 'ios-film' : 'ios-film-outline'}
-                    size={26}
-                    style={{ color: tintColor, fontWeight: 'bold' }}
-                />
+                <View style={{ width: 24, height: 24 }}>
+                    <Icon
+                        name={focused ? 'ios-film' : 'ios-film-outline'}
+                        size={24}
+                        style={{ color: tintColor }}
+                    />
+                </View>
             ),
         })
     }
@@ -94,12 +104,16 @@ const LoginTab = StackNavigator(
         navigationOptions: ({ navigation: { state } }) => ({
             ...navigationConfig,
             tabBarLabel: '登录',
+            swipeEnabled: false,
+            showLabel: true,
             tabBarIcon: ({ tintColor, focused }) => (
-                <Icon
-                    name={focused ? 'ios-people' : 'ios-people-outline'}
-                    size={26}
-                    style={{ color: tintColor, fontWeight: 'bold' }}
-                />
+                <View style={{ width: 24, height: 24 }}>
+                    <Icon
+                        name={focused ? 'ios-people' : 'ios-people-outline'}
+                        size={24}
+                        style={{ color: tintColor }}
+                    />
+                </View>
             ),
         })
     }
@@ -115,12 +129,16 @@ const ProfileTab = StackNavigator(
         navigationOptions: () => ({
             ...navigationConfig,
             tabBarLabel: '个人中心',
+            swipeEnabled: false,
+            showLabel: true,
             tabBarIcon: ({ tintColor, focused }) => (
-                <Icon
-                    name={focused ? 'ios-settings' : 'ios-settings-outline'}
-                    size={26}
-                    style={{ color: tintColor, fontWeight: 'bold' }}
-                />
+                <View style={{ width: 24, height: 24 }}>
+                    <Icon
+                        name={focused ? 'ios-settings' : 'ios-settings-outline'}
+                        size={24}
+                        style={{ color: tintColor }}
+                    />
+                </View>
             ),
         })
     }
@@ -139,6 +157,7 @@ const Stack = TabNavigator(
         tabBarOptions: {
             activeTintColor: '#3e9ce9',
             inactiveTintColor: '#999999',
+            showLabel: true,
             showIcon: true,
             style: {
                 backgroundColor: '#fff'
@@ -146,8 +165,11 @@ const Stack = TabNavigator(
             indicatorStyle: {
                 opacity: 0
             },
+            labelStyle: {
+                fontSize: 13
+            },
             tabStyle: {
-                padding: 0
+                paddingBottom: 0
             }
         }
     }

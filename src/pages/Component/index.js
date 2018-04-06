@@ -71,6 +71,18 @@ class ComponentScreen extends Component {
                 />
 
                 <Divider />
+                <Button
+                    onPress={() => this.props.navigation.navigate('FlatlistScreen')}
+                    title="flatlist page"
+                />
+
+                <Divider />
+                <Button
+                    onPress={() => this.props.navigation.navigate('TabViewExample')}
+                    title="tabView page"
+                />
+
+                <Divider />
                 <Button onPress={() => this.request()}
                     title="axios get 200"
                 />

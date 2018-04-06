@@ -5,11 +5,15 @@ import {
     Image,
     FlatList,
     StyleSheet,
+    RefreshControl,
     TouchableOpacity,
+    ActivityIndicator,
     TouchableNativeFeedback
 } from 'react-native';
 import ItemCell from './ItemCell'
 import { Divider } from 'react-native-elements'
+import Banner from 'components/Banner'
+import Color from 'constants/Color'
 
 const sourceData = {
     title: '中国对原产于美国的大豆飞机等106项商品加征25%关税',
@@ -32,8 +36,12 @@ class ItemList extends Component {
     }
 
     componentWillMount() {
-        this.setState({ refreshing: true })
-        this.loadData();
+        console.log('componentWillMount')
+        // this.loadData();
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount')
     }
 
     loadData() {
@@ -46,21 +54,29 @@ class ItemList extends Component {
     }
 
     _header = () => {
-        return null
+        if (this.props.typeId == 1) {
+            return <View style={{ height: 160 }}><Banner /></View>
+        } else {
+            return null
+        }
     }
 
-    _renderItem = ({ item }) => (
-        <TouchableOpacity activeOpacity={0.5} onPress={() => this.props.nav.navigate('Detail', {typeId: item.id})}>
-            <ItemCell
-                nav={this.props.nav}
-                item={item}
-            />
-        </TouchableOpacity>
-    );
+    _renderItem = ({ item }) => {
+        return <View>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => this.props.nav.navigate('Detail', { typeId: item.id })}>
+                <ItemCell
+                    nav={this.props.nav}
+                    item={item}
+                />
+            </TouchableOpacity>
+        </View>
+    }
 
     _keyExtractor = (item, index) => '' + index;
 
     _renderRefresh = () => {
+        console.log('_renderRefresh itemList')
+        this.loadData();
         this.setState({ refreshing: true })//开始刷新
         setTimeout(() => {
             this.setState({ refreshing: false });
@@ -69,7 +85,7 @@ class ItemList extends Component {
 
     _footer = () => {
         if (this.state.isEmpty) {
-            return <View></View>;
+            return null;
         }
 
         return <View style={{ padding: 8 }}>
@@ -94,6 +110,7 @@ class ItemList extends Component {
 
     // 上拉加载更多
     _onEndReached = () => {
+        console.log('_onEndReached itemList')
         if (this.state.isEmpty) {
             return false;
         }
@@ -105,24 +122,23 @@ class ItemList extends Component {
         const { typeId, nav } = this.props;
         console.log('ItemList: ', typeId, nav);
 
-        if (this.state.sourceData) {
-            return <FlatList
-                // ListHeaderComponent={this._header}
-                // ListFooterComponent={this._footer}
-                keyExtractor={this._keyExtractor}
-                ItemSeparatorComponent={this._separator}
-                renderItem={this._renderItem}
-                onRefresh={this._renderRefresh}
-                refreshing={this.state.refreshing}
-                onEndReachedThreshold={0.2}
-                // onEndReached={this._onEndReached}
-                numColumns={1}
-                ListEmptyComponent={this._renderEmptyView}
-                data={this.state.sourceData}>
-            </FlatList>
-        } else {
-            return null
-        }
+        return <FlatList
+            ListHeaderComponent={this._header}
+            ListFooterComponent={this._footer}
+            keyExtractor={this._keyExtractor}
+            ItemSeparatorComponent={this._separator}
+            renderItem={this._renderItem}
+            onRefresh={this._renderRefresh}
+            refreshing={this.state.refreshing}
+            onEndReachedThreshold={0.1}
+            onEndReached={this._onEndReached}
+            numColumns={1}
+            ListEmptyComponent={this._renderEmptyView}
+            getItemLayout={(data, index) => (
+                { length: 80, offset: (80 + 2) * index, index }
+            )}
+            data={this.state.sourceData}>
+        </FlatList>
     }
 }
 
