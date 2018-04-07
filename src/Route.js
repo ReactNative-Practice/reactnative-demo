@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BackHandler, View, ToastAndroid } from 'react-native'
+import { BackHandler, Easing, I18nManager, Animated, View, ToastAndroid } from 'react-native'
 import {
     getChildEventSubscriber,
     addNavigationHelpers,
@@ -21,8 +21,9 @@ import AuthLoading from 'pages/Login/AuthLoading'
 import ComponentScreen from 'pages/Component'
 import TabViewExample from 'pages/Component/TabViewExample'
 import FlatlistScreen from 'pages/Component/FlatlistScreen'
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 
-/** 配置导航的属性 **/
+/** navigationConfig的属性 **/
 const navigationConfig = {
     headerStyle: {
         height: 45,
@@ -31,12 +32,35 @@ const navigationConfig = {
         backgroundColor: Color.primary,
     },
     headerTintColor: '#fff',
+    gesturesEnabled: true,
+    gestureResponseDistance: {
+        vertical: 60,
+        horizontal: 135
+    },
     headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
         fontSize: 16,
         flex: 1,
     },
+}
+
+/** Stack的属性 **/
+const stackNavigatorConfig = {
+    mode: 'card',
+    // headerMode: 'screen',
+    cardStyle: ({ backgroundColor: '#fff' }),
+    transitionConfig: () => ({
+        transitionSpec: {
+            duration: 350,
+            easing: Easing.out(Easing.poly(4)),
+            timing: Animated.timing,
+        },
+        //因为ios 的导航动画默认是从左到右，所以，这里配置一下动画，使用react-navigation已经实现的从左到右的动画，
+        //适配Android，不过，需要导入动画 
+        //import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator';
+        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+    }),
 }
 
 const HomeTab = StackNavigator(
@@ -47,6 +71,7 @@ const HomeTab = StackNavigator(
     },
     {
         initialRouteName: "Home",
+        ...stackNavigatorConfig,
         navigationOptions: ({ navigation: { state } }) => ({
             ...navigationConfig,
             tabBarLabel: '首页',
@@ -75,6 +100,7 @@ const ComponentTab = StackNavigator(
     },
     {
         initialRouteName: "ComponentScreen",
+        ...stackNavigatorConfig,
         navigationOptions: ({ navigation: { state } }) => ({
             ...navigationConfig,
             tabBarLabel: '组件',

@@ -4,7 +4,7 @@ import {
   getChildEventSubscriber,
   addNavigationHelpers,
   StackNavigator,
-  NavigationActions
+  NavigationActions,
 } from "react-navigation";
 
 import { observable, action } from "mobx";
@@ -35,11 +35,11 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Stack
-          ref={navigatorRef => {
-            NavigationService.setContainer(navigatorRef);
-          }}
-        />
+          <Stack
+            ref={navigatorRef => {
+              NavigationService.setContainer(navigatorRef);
+            }}
+          />
       </Provider>
     );
   }

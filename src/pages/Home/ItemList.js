@@ -19,8 +19,10 @@ const sourceData = {
     title: '中国对原产于美国的大豆飞机等106项商品加征25%关税',
     img: 'https://cms-bucket.nosdn.127.net/6b801eaf979948dfafb99bd9a5e1d19c20180404154633.jpeg',
     source: '中国青年报',
-    category: '',
-    datetime: '2018-04-03',
+    content: '中国对原产于美国的大豆飞机等106项商品加征25%关税',
+    type_name: '',
+    type_id: '',
+    created_time: '2018-04-03',
     is_recommand: false,
 }
 
@@ -37,7 +39,6 @@ class ItemList extends Component {
 
     componentWillMount() {
         console.log('componentWillMount')
-        // this.loadData();
     }
 
     componentDidMount() {

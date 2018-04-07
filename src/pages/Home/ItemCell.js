@@ -5,6 +5,7 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
+import Color from 'constants/Color';
 
 class ItemCell extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class ItemCell extends Component {
 
                 <View style={styles.cellBottom}>
                     <Text style={styles.source}>{item.source}</Text>
-                    <Text style={styles.datetime}>{item.datetime}</Text>
+                    <Text style={styles.created_time}>{item.created_time}</Text>
                 </View>
             </View>
         </View>
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: '#333',
+        lineHeight: 26,
         height: 60,
     },
     imgView: {
@@ -53,13 +55,16 @@ const styles = StyleSheet.create({
     },
     cellBottom: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-around',
     },
     source: {
         flex: 1,
+        color: Color.primary,
     },
-    datetime: {
+    created_time: {
         flex: 1,
+        color: '#666',
+        textAlign: 'right'
     }
 })
 
