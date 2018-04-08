@@ -41,7 +41,7 @@ export default class Banner extends Component {
         </View>
       </Swiper>
     } else {
-      return <View style={150}></View>
+      return <View style={{height: 150}}></View>
     }
   }
 }
