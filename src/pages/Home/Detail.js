@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     WebView,
+    Dimensions,
     ScrollView,
     StyleSheet,
     TouchableOpacity
@@ -9,6 +10,7 @@ import {
 import { Button, Divider, Text, Input } from 'react-native-elements'
 import HTMLView from 'react-native-htmlview'
 import WebContainer from 'components/WebContainer.js'
+const height = Dimensions.get('screen').height;
 
 const detail = {
     title: '中国对原产于美国的大豆飞机等106项商品加征25%关税',
@@ -48,45 +50,62 @@ class Detail extends Component {
         const { goBack } = this.props.navigation
         console.log('html: ', this.state.data.content)
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.warp}>
-                    <Text style={styles.title}>{this.state.data.title}</Text>
-                    <View style={styles.subtitle}>
-                        <Text style={styles.source}>{this.state.data.source} </Text>
-                        <Text style={styles.datetime}>{this.state.data.created_time}</Text>
+            <View style={styles.container}>
+                <ScrollView style={styles.scrollContainer}>
+                    <View style={styles.warp}>
+                        <Text style={styles.title}>{this.state.data.title}</Text>
+                        <View style={styles.subtitle}>
+                            <Text style={styles.source}>{this.state.data.source} </Text>
+                            <Text style={styles.datetime}>{this.state.data.created_time}</Text>
+                        </View>
+
+                        <HTMLView
+                            value={this.state.data.content}
+                            stylesheet={webViewStyles}
+                        />
+
+                        <View style={styles.share}>
+                            <Text>分享</Text>
+                        </View>
+
+                        <View style={styles.commentList}>
+                            <Text>热门评论</Text>
+                        </View>
                     </View>
 
-                    <HTMLView
-                        value={this.state.data.content}
-                        stylesheet={webViewStyles}
-                    />
-
-                    <View style={styles.share}>
-                        <Text>分享</Text>
-                    </View>
-
-                    <View style={styles.commentList}>
-                        <Text>热门评论</Text>
-                    </View>
-                </View>
+                </ScrollView>
 
                 <View style={styles.comment}>
-                    <Input
-                        style={styles.commentInput}
-                        placeholder='发表评论'
-                        inputStyle={{ fontSize: 12 }}
-                    />
-                    <Text style={styles.commentSend}>发送</Text>
+                    {/* <View>
+                        <Input
+                            placeholder='发表评论'
+                            containerStyle={styles.commentInput}
+                            inputStyle={styles.commentInputStyle}
+                        />
+                        <Button />
+                        <Text style={styles.commentSend}>发送</Text>
+                    </View> */}
+                    <View>
+                        <Input
+                            placeholder='发表评论'
+                            containerStyle={styles.inputContainerStyle}
+                            inputStyle={styles.inputStyle}
+                        />
+                    </View>
                 </View>
-            </ScrollView>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: "#fff",
+    },
+    scrollContainer: {
+        backgroundColor: "#ccc",
+        paddingBottom: 50,
     },
     warp: {
         padding: 15,
@@ -120,25 +139,43 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         bottom: 0,
-        right: 0,
         height: 40,
-        zIndex: 111,
-        marginBottom: 10,
-        borderWidth: 1,
+        width: '100%',
+        backgroundColor: '#fff',
     },
     commentInput: {
-        flex: 4,
+        borderWidth: 1,
+        borderColor: 'green',
+        width: '86%',
     },
     commentInputStyle: {
+        fontSize: 14,
         borderWidth: 1,
         fontSize: 14,
         padding: 0,
         borderColor: 'red'
     },
     commentSend: {
-        flex: 1,
+        width: '14%',
         borderColor: 'blue',
         borderWidth: 1,
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#444',
+        lineHeight: 40,
+        textAlign: 'center',
+    },
+    inputContainerStyle: {
+        flex: 3,
+        borderWidth: 1,
+        borderColor: 'red',
+    },
+    inputStyle: {
+        fontSize: 14,
+        borderWidth: 1,
+        fontSize: 14,
+        padding: 0,
+        borderColor: 'red'
     }
 });
 
