@@ -7,6 +7,8 @@
 // 建议使用yarn，不使用npm
 npm install [package]   ==	yarn add [package]
 
+// 切换到开发分支
+git checkout dev
 
 // run 
 react-native run-android
@@ -34,10 +36,32 @@ react-native run-ios
 - react-native-vector-icons
 - react-native-scrollable-tab-view
 
-## 功能：
+
+## 需要开发的内容
+### 功能：
 - [ ] 登录：微博、微信、支付宝 
-- [ ] 分享：微信、微博
+- [ ] 分享：微信、微博、其他App
 - [ ] 支付：支付宝，微信
+- [ ] 推送通知：第三方平台，自己开发
+- [ ] 数据持久化 `realm`
 - [x] 新闻列表 
 - [x] 新闻详情  
 - [x] 登录、注册 
+- [ ] 热更新
+
+### 常用组件
+- [x] 列表：Flatlist
+- [ ] 网络信息、设备信息
+- [ ] 视频播放，i3u8直播
+- [ ] 图片选择、图片压缩、上传
+- [ ] 拍照、拍视频
+- [ ] 网络数据缓存、图片缓存
+- [ ] 动画使用
+
+## native
+- [ ] 开发自定义组件
+- [ ] 和原生页面互转
+
+
+## 抽离常用组件
+待补充...
