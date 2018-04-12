@@ -35,6 +35,7 @@ react-native run-ios
 - react-native-elements
 - react-native-vector-icons
 - react-native-scrollable-tab-view
+- react-native-animatable
 
 
 ## 需要开发的内容
@@ -57,7 +58,7 @@ react-native run-ios
 - [ ] 图片选择、图片压缩、上传
 - [ ] 拍照、拍视频
 - [ ] 网络数据缓存、图片缓存
-- [ ] 动画使用
+- [x] 动画使用:1.Animated库 2.react-native-animatable
 
 ## 其他
 - [ ] 开发自定义组件
