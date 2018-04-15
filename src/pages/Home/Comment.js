@@ -4,9 +4,16 @@ import {
     TextInput
 } from 'react-native';
 
-class Comment extends Component {
+class CommentPage extends Component {
+
     constructor(props) {
         super(props)
+    }
+
+    static navigationOptions = {
+        tabBarVisible: false,
+        title: "热门评论",
+        headerRight: (<Text></Text>),
     }
 
     render() {
@@ -14,4 +21,4 @@ class Comment extends Component {
     }
 }
 
-export default Commnet;
+export default CommentPage;

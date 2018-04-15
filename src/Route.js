@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Login from 'pages/Login'
 import Home from 'pages/Home'
 import Detail from 'pages/Home/Detail'
+import CommentPage from 'pages/Home/Comment'
 import Profile from 'pages/Profile'
 import Favorite from 'pages/Profile/Favorite'
 import SignUp from 'pages/Login/SignUp'
@@ -67,6 +68,7 @@ const HomeTab = StackNavigator(
     {
         Home: { screen: Home },
         Detail: { screen: Detail },
+        Comment: { screen: CommentPage },
         AuthLoading: AuthLoading,
     },
     {

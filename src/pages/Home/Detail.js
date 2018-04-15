@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import {
     View,
     WebView,
+    Keyboard,
     Dimensions,
     ScrollView,
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import { Button, Divider, Text, Input } from 'react-native-elements'
+import { Button, Divider, Text, Input, Icon } from 'react-native-elements'
 import HTMLView from 'react-native-htmlview'
-import WebContainer from 'components/WebContainer.js'
+import Footer from './Footer'
+
 const height = Dimensions.get('screen').height;
 
 const detail = {
+    id: 1,
     title: '中国对原产于美国的大豆飞机等106项商品加征25%关税',
     img: 'https://cms-bucket.nosdn.127.net/6b801eaf979948dfafb99bd9a5e1d19c20180404154633.jpeg',
     source: '中国青年报',
@@ -31,6 +34,7 @@ class Detail extends Component {
         this.state = {
             data: detail,
             height: 500,
+            inputVisible: false,
         }
     }
 
@@ -38,8 +42,6 @@ class Detail extends Component {
         tabBarVisible: false,
     }
 
-    componentWillMount() {
-    }
 
     // 请求数据
     loadData() {
@@ -72,27 +74,10 @@ class Detail extends Component {
                             <Text>热门评论</Text>
                         </View>
                     </View>
-
                 </ScrollView>
 
-                <View style={styles.comment}>
-                    {/* <View>
-                        <Input
-                            placeholder='发表评论'
-                            containerStyle={styles.commentInput}
-                            inputStyle={styles.commentInputStyle}
-                        />
-                        <Button />
-                        <Text style={styles.commentSend}>发送</Text>
-                    </View> */}
-                    <View>
-                        <Input
-                            placeholder='发表评论'
-                            containerStyle={styles.inputContainerStyle}
-                            inputStyle={styles.inputStyle}
-                        />
-                    </View>
-                </View>
+                
+                <Footer nav={this.props.navigation} item={this.state.data} />
             </View>
         )
     }
@@ -104,7 +89,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     scrollContainer: {
-        backgroundColor: "#ccc",
+        // backgroundColor: "#ccc",
         paddingBottom: 50,
     },
     warp: {
@@ -134,49 +119,6 @@ const styles = StyleSheet.create({
     commentList: {
         marginBottom: 50,
     },
-    comment: {
-        flexDirection: 'row',
-        position: 'absolute',
-        left: 0,
-        bottom: 0,
-        height: 40,
-        width: '100%',
-        backgroundColor: '#fff',
-    },
-    commentInput: {
-        borderWidth: 1,
-        borderColor: 'green',
-        width: '86%',
-    },
-    commentInputStyle: {
-        fontSize: 14,
-        borderWidth: 1,
-        fontSize: 14,
-        padding: 0,
-        borderColor: 'red'
-    },
-    commentSend: {
-        width: '14%',
-        borderColor: 'blue',
-        borderWidth: 1,
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#444',
-        lineHeight: 40,
-        textAlign: 'center',
-    },
-    inputContainerStyle: {
-        flex: 3,
-        borderWidth: 1,
-        borderColor: 'red',
-    },
-    inputStyle: {
-        fontSize: 14,
-        borderWidth: 1,
-        fontSize: 14,
-        padding: 0,
-        borderColor: 'red'
-    }
 });
 
 const webViewStyles = StyleSheet.create({
